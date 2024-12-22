@@ -27,7 +27,6 @@ enum class JsonDiffType
 	Add,
 	Remove,
 	Replace,
-	Reorder,
 	Unknown
 };
 
@@ -69,13 +68,10 @@ private:
 			{
 				return JsonDiffType::Replace;
 			}
-			else if (op == "reorder")
-			{
-				return JsonDiffType::Reorder;
-			}
 		}
 
-		return JsonDiffType::Unknown;
+		assert(false && "Unsupported operation type");
+		return JsonDiffType::Unknown; // Unreachable, required to satisfy return type
 	}
 
 	static JsonPath ExtractPath(const json& operation)
@@ -108,7 +104,6 @@ public:
 		for (const auto& patchOperation : patch)
 		{
 			JsonDiffOperation operation(patchOperation);
-			assert(operation.mDiffType != JsonDiffType::Unknown);
 
 			if (processedPaths.count(operation.mPath))
 			{
@@ -187,7 +182,7 @@ private:
 				size_t siblingIndex = std::stoul(sibling.mPath.Tokens().back());
 
 				processor.OnDiffReorder(operation.mPath, index, newValue, siblingIndex, siblingNewValue);
-				processedPaths.insert(sibling.mPath);
+				processedPaths.insert(sibling.mPath);  // Mark sibling as processed
 				return true;
 			}
 		}
