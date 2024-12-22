@@ -14,9 +14,8 @@
 #include <string>
 #include <unordered_set>
 #include <cassert>
-#include <memory>
-#include <vector>
 #include <stdexcept>
+#include <vector>
 
 // Type Aliases
 //--------------------------------------------------------------------------

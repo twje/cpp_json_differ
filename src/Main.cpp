@@ -4,6 +4,9 @@
 #include "JsonDiffer.h"
 #include "IJsonDiffProcessor.h"
 
+// System
+#include <iostream>
+
 //--------------------------------------------------------------------------
 class EmailConfigChangeGenerator : public IJsonDiffProcessor
 {

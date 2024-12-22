@@ -2,12 +2,11 @@
 
 // Includes
 //--------------------------------------------------------------------------
-#include <string_view>
 #include <string>
 #include <sstream>
 #include <vector>
-#include <iostream>
-#include <functional>
+#include <ostream>
+#include <stdexcept>
 
 //--------------------------------------------------------------------------
 class JsonPath
