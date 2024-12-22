@@ -73,20 +73,6 @@ public:
         return os;
     }
 
-    struct Hash
-    {
-        size_t operator()(const JsonPath& path) const
-        {
-            std::hash<std::string> stringHasher;
-            size_t hash = 0;
-            for (const auto& token : path.mTokens)
-            {
-                hash ^= stringHasher(token) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
-            }
-            return hash;
-        }
-    };
-
 private:
     template <typename Iterator>
     static std::string GeneratePathFromTokens(Iterator begin, Iterator end)
@@ -114,7 +100,13 @@ namespace std
     {
         size_t operator()(const JsonPath& path) const
         {
-            return JsonPath::Hash{}(path);
+            std::hash<std::string> stringHasher;
+            size_t hash = 0;
+            for (const auto& token : path.Tokens())
+            {
+                hash ^= stringHasher(token) + 0x9e3779b9 + (hash << 6) + (hash >> 2);
+            }
+            return hash;
         }
     };
 }
